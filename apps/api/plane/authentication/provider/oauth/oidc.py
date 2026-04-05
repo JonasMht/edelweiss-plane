@@ -71,10 +71,17 @@ class OIDCOAuthProvider(OauthAdapter):
         client_id = OIDC_CLIENT_ID
         client_secret = OIDC_CLIENT_SECRET
 
-        redirect_uri = (
-            f"{'https' if request.is_secure() else 'http'}"
-            f"://{request.get_host()}/auth/oidc/callback/"
-        )
+        # Use WEB_URL for redirect_uri so it resolves to the public domain,
+        # not the internal Docker hostname from request.get_host().
+        import os as _os
+        web_url = _os.environ.get("WEB_URL", "").rstrip("/")
+        if web_url:
+            redirect_uri = f"{web_url}/auth/oidc/callback/"
+        else:
+            redirect_uri = (
+                f"{'https' if request.is_secure() else 'http'}"
+                f"://{request.get_host()}/auth/oidc/callback/"
+            )
         url_params = {
             "client_id": client_id,
             "scope": self.scope,
@@ -102,15 +109,46 @@ class OIDCOAuthProvider(OauthAdapter):
     def _discover(host: str) -> dict:
         """Fetch OIDC discovery document, return empty dict on failure."""
         try:
+            # verify=False: internal Caddy uses self-signed certs in VPN mode.
             resp = requests.get(
                 f"{host}/.well-known/openid-configuration",
                 timeout=5,
+                verify=False,
             )
             if resp.ok:
                 return resp.json()
         except requests.RequestException:
             pass
         return {}
+
+    def get_user_token(self, data, headers=None):
+        """Override to skip SSL verification for self-signed Edelweiss certs."""
+        try:
+            response = requests.post(
+                self.get_token_url(), data=data, headers=headers, verify=False
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException:
+            raise AuthenticationException(
+                error_code=AUTHENTICATION_ERROR_CODES["OIDC_OAUTH_PROVIDER_ERROR"],
+                error_message="OIDC_OAUTH_PROVIDER_ERROR",
+            )
+
+    def get_user_response(self):
+        """Override to skip SSL verification for self-signed Edelweiss certs."""
+        headers = {"Authorization": f"Bearer {self.token_data.get('access_token')}"}
+        try:
+            response = requests.get(
+                self.get_user_info_url(), headers=headers, verify=False
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException:
+            raise AuthenticationException(
+                error_code=AUTHENTICATION_ERROR_CODES["OIDC_OAUTH_PROVIDER_ERROR"],
+                error_message="OIDC_OAUTH_PROVIDER_ERROR",
+            )
 
     def set_token_data(self):
         data = {
