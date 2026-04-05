@@ -21,18 +21,8 @@ import { useInstance, useTheme } from "@/hooks/store";
 const helpOptions = [
   {
     name: "Documentation",
-    href: "https://docs.plane.so/",
+    href: "/docs",
     Icon: PageIcon,
-  },
-  {
-    name: "Join our Forum",
-    href: "https://forum.plane.so",
-    Icon: MessageSquare,
-  },
-  {
-    name: "Report a bug",
-    href: "https://github.com/makeplane/plane/issues/new/choose",
-    Icon: GithubIcon,
   },
 ];
 

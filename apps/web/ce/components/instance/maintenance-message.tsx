@@ -8,8 +8,8 @@ export function MaintenanceMessage() {
   const linkMap = [
     {
       key: "mail_to",
-      label: "Contact Support",
-      value: "mailto:support@plane.so",
+      label: "Contact Admin",
+      value: "mailto:admin@edelweissai.org",
     },
   ];
 

@@ -23,6 +23,7 @@ import { GiteaConfiguration } from "@/components/authentication/gitea-config";
 import { GithubConfiguration } from "@/components/authentication/github-config";
 import { GitlabConfiguration } from "@/components/authentication/gitlab-config";
 import { GoogleConfiguration } from "@/components/authentication/google-config";
+import { OIDCConfiguration } from "@/components/authentication/oidc-config";
 import { PasswordLoginConfiguration } from "@/components/authentication/password-config-switch";
 
 // Authentication methods
@@ -88,5 +89,19 @@ export const getCoreAuthenticationModesMap: (
     icon: <img src={giteaLogo} height={20} width={20} alt="Gitea Logo" />,
     config: <GiteaConfiguration disabled={disabled} updateConfig={updateConfig} />,
     enabledConfigKey: "IS_GITEA_ENABLED",
+  },
+  oidc: {
+    key: "oidc",
+    name: "Edelweiss SSO",
+    description: "Allow members to log in or sign up using their Edelweiss account via OpenID Connect.",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20" className="text-tertiary">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
+      </svg>
+    ),
+    config: <OIDCConfiguration disabled={disabled} updateConfig={updateConfig} />,
+    enabledConfigKey: "IS_OIDC_ENABLED",
   },
 });

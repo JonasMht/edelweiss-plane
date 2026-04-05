@@ -115,45 +115,22 @@ export const PLANE_COMMUNITY_PRODUCTS: Record<string, IPaymentProduct> = {
 };
 
 /**
- * URL for the "Talk to Sales" page where users can contact sales team
+ * Disabled for Edelweiss self-hosted — all features available.
  */
-export const TALK_TO_SALES_URL = "https://plane.so/talk-to-sales";
+export const TALK_TO_SALES_URL = "";
 
-/**
- * Mapping of subscription types to their respective upgrade/redirection URLs based on billing frequency
- * Used for self-hosted installations to redirect users to appropriate upgrade pages
- */
 export const SUBSCRIPTION_REDIRECTION_URLS: Record<EProductSubscriptionEnum, Record<TBillingFrequency, string>> = {
-  [EProductSubscriptionEnum.FREE]: {
-    month: TALK_TO_SALES_URL,
-    year: TALK_TO_SALES_URL,
-  },
-  [EProductSubscriptionEnum.ONE]: {
-    month: TALK_TO_SALES_URL,
-    year: TALK_TO_SALES_URL,
-  },
-  [EProductSubscriptionEnum.PRO]: {
-    month: "https://app.plane.so/upgrade/pro/self-hosted?plan=month",
-    year: "https://app.plane.so/upgrade/pro/self-hosted?plan=year",
-  },
-  [EProductSubscriptionEnum.BUSINESS]: {
-    month: "https://app.plane.so/upgrade/business/self-hosted?plan=month",
-    year: "https://app.plane.so/upgrade/business/self-hosted?plan=year",
-  },
-  [EProductSubscriptionEnum.ENTERPRISE]: {
-    month: TALK_TO_SALES_URL,
-    year: TALK_TO_SALES_URL,
-  },
+  [EProductSubscriptionEnum.FREE]: { month: "", year: "" },
+  [EProductSubscriptionEnum.ONE]: { month: "", year: "" },
+  [EProductSubscriptionEnum.PRO]: { month: "", year: "" },
+  [EProductSubscriptionEnum.BUSINESS]: { month: "", year: "" },
+  [EProductSubscriptionEnum.ENTERPRISE]: { month: "", year: "" },
 };
 
-/**
- * Mapping of subscription types to their respective marketing webpage URLs
- * Used to direct users to learn more about each plan's features and pricing
- */
 export const SUBSCRIPTION_WEBPAGE_URLS: Record<EProductSubscriptionEnum, string> = {
-  [EProductSubscriptionEnum.FREE]: TALK_TO_SALES_URL,
-  [EProductSubscriptionEnum.ONE]: TALK_TO_SALES_URL,
-  [EProductSubscriptionEnum.PRO]: "https://plane.so/pro",
-  [EProductSubscriptionEnum.BUSINESS]: "https://plane.so/business",
-  [EProductSubscriptionEnum.ENTERPRISE]: "https://plane.so/business",
+  [EProductSubscriptionEnum.FREE]: "",
+  [EProductSubscriptionEnum.ONE]: "",
+  [EProductSubscriptionEnum.PRO]: "",
+  [EProductSubscriptionEnum.BUSINESS]: "",
+  [EProductSubscriptionEnum.ENTERPRISE]: "",
 };
