@@ -4,15 +4,11 @@
  * See the LICENSE file for details.
  */
 
-import { WEBSITE_URL } from "@plane/constants";
-// assets
-import { PlaneLogo } from "@plane/propel/icons";
-
 type TPoweredBy = {
   disabled?: boolean;
 };
 
-export function PoweredBy(props: TPoweredBy) {
+export function PoweredBy(_props: TPoweredBy) {
   // Disabled for Edelweiss self-hosted deployment
   return null;
 }

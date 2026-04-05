@@ -10,4 +10,7 @@ import { cn } from "@plane/utils";
 // components
 import { ProIcon } from "@/components/common/pro-icon";
 
-export function IssueEmbedUpgradeCard(props: any) {\n  // Edelweiss: all features available\n  return null;\n}
+export function IssueEmbedUpgradeCard() {
+  // Edelweiss: all features available
+  return null;
+}
